@@ -42,18 +42,18 @@ deck_type = 2
 
 [node name="Player1Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 248.0
-offset_right = 384.0
-offset_bottom = 344.0
+offset_left = 360.0
+offset_top = 256.0
+offset_right = 424.0
+offset_bottom = 352.0
 deck_owner = 1
 
 [node name="Player2Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
-offset_left = 496.0
-offset_top = 248.0
-offset_right = 560.0
-offset_bottom = 344.0
+offset_left = 536.0
+offset_top = 256.0
+offset_right = 600.0
+offset_bottom = 352.0
 deck_owner = 2
 
 [node name="Log" type="TextEdit" parent="."]
@@ -74,65 +74,65 @@ alignment = 1
 
 [node name="MoveLeft" type="Button" parent="."]
 layout_mode = 0
-offset_left = 304.0
-offset_top = 208.0
-offset_right = 384.0
-offset_bottom = 239.0
+offset_left = 344.0
+offset_top = 216.0
+offset_right = 424.0
+offset_bottom = 247.0
 text = "<- Move"
 
 [node name="MoveRight" type="Button" parent="."]
 layout_mode = 0
-offset_left = 496.0
-offset_top = 208.0
-offset_right = 576.0
-offset_bottom = 239.0
+offset_left = 536.0
+offset_top = 216.0
+offset_right = 616.0
+offset_bottom = 247.0
 text = "Move ->"
 
 [node name="EndTurn" type="Button" parent="."]
 layout_mode = 0
-offset_left = 400.0
-offset_top = 416.0
-offset_right = 480.0
-offset_bottom = 456.0
+offset_left = 440.0
+offset_top = 424.0
+offset_right = 520.0
+offset_bottom = 464.0
 text = "EndTurn"
 
 [node name="DebugModifierP1" type="Button" parent="."]
 layout_mode = 0
-offset_left = 176.0
-offset_top = 368.0
-offset_right = 256.0
-offset_bottom = 408.0
+offset_left = 216.0
+offset_top = 376.0
+offset_right = 296.0
+offset_bottom = 416.0
 text = "Modifier"
 
 [node name="DebugModifierP2" type="Button" parent="."]
 layout_mode = 0
-offset_left = 624.0
-offset_top = 368.0
-offset_right = 704.0
-offset_bottom = 408.0
+offset_left = 664.0
+offset_top = 376.0
+offset_right = 744.0
+offset_bottom = 416.0
 text = "Modifier"
 
 [node name="Search" type="Button" parent="."]
 layout_mode = 0
-offset_left = 400.0
-offset_top = 208.0
-offset_right = 480.0
-offset_bottom = 240.0
+offset_left = 440.0
+offset_top = 216.0
+offset_right = 520.0
+offset_bottom = 248.0
 text = "Search"
 
 [node name="CharSheetP1" parent="." instance=ExtResource("4_e023n")]
 layout_mode = 0
-offset_left = 264.0
-offset_top = 368.0
-offset_right = 392.0
-offset_bottom = 456.0
+offset_left = 304.0
+offset_top = 376.0
+offset_right = 432.0
+offset_bottom = 464.0
 
 [node name="CharSheetP2" parent="." instance=ExtResource("4_e023n")]
 layout_mode = 0
-offset_left = 488.0
-offset_top = 368.0
-offset_right = 616.0
-offset_bottom = 456.0
+offset_left = 528.0
+offset_top = 376.0
+offset_right = 656.0
+offset_bottom = 464.0
 
 [node name="PhaseDisplay" type="Panel" parent="."]
 layout_mode = 1
