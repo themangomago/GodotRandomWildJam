@@ -1,0 +1,46 @@
+[gd_scene load_steps=5 format=3 uid="uid://yycvudrp0rrt"]
+
+[ext_resource type="Script" path="res://src/train_wagon.gd" id="1_ilw2c"]
+[ext_resource type="PackedScene" uid="uid://cc28vpkglgaar" path="res://src/card.tscn" id="1_qx23r"]
+[ext_resource type="Texture2D" uid="uid://d4il2mxs4h1o" path="res://assets/tokens/player1.png" id="3_4wihd"]
+[ext_resource type="Texture2D" uid="uid://enc2qmrkq8w" path="res://assets/tokens/player2.png" id="4_3p2ih"]
+
+[node name="train_wagon" type="Control"]
+custom_minimum_size = Vector2(64, 96)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 96.0
+script = ExtResource("1_ilw2c")
+
+[node name="Card" parent="." instance=ExtResource("1_qx23r")]
+
+[node name="players" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_top = 77.0
+offset_right = 64.0
+offset_bottom = 93.0
+alignment = 1
+
+[node name="p1" type="TextureRect" parent="players"]
+visible = false
+layout_mode = 2
+texture = ExtResource("3_4wihd")
+
+[node name="p2" type="TextureRect" parent="players"]
+visible = false
+layout_mode = 2
+texture = ExtResource("4_3p2ih")
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 23.0
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_right = 64.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 10
+text = "Name"
+horizontal_alignment = 1

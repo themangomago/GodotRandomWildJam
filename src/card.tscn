@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cc28vpkglgaar"]
+
+[ext_resource type="Texture2D" uid="uid://bcj4n2s85x420" path="res://assets/cards/traindummy.png" id="1_0mhtk"]
+[ext_resource type="Script" path="res://src/card.gd" id="1_76nwq"]
+
+[node name="Card" type="Control"]
+custom_minimum_size = Vector2(64, 96)
+layout_mode = 3
+anchors_preset = 0
+offset_right = 64.0
+offset_bottom = 96.0
+script = ExtResource("1_76nwq")
+
+[node name="Card" type="Sprite2D" parent="."]
+texture = ExtResource("1_0mhtk")
+centered = false
+hframes = 3

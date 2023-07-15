@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://wrag78ilftgy"]
+
+[ext_resource type="Texture2D" uid="uid://cxifun4iy5h35" path="res://assets/cards/empty_deck.png" id="1_fye6m"]
+[ext_resource type="Script" path="res://src/deck.gd" id="2_ppd7q"]
+[ext_resource type="Texture2D" uid="uid://ch24vs7b13csq" path="res://assets/cards/cards.png" id="2_xm41a"]
+
+[node name="Deck" type="TextureRect"]
+texture_filter = 1
+offset_right = 64.0
+offset_bottom = 96.0
+mouse_filter = 0
+texture = ExtResource("1_fye6m")
+stretch_mode = 4
+script = ExtResource("2_ppd7q")
+
+[node name="Card" type="Sprite2D" parent="."]
+texture = ExtResource("2_xm41a")
+centered = false
+hframes = 5
+frame = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]

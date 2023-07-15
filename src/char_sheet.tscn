@@ -1,0 +1,106 @@
+[gd_scene load_steps=3 format=3 uid="uid://bvvtk2erm0o8d"]
+
+[ext_resource type="Script" path="res://src/char_sheet.gd" id="1_kbhbo"]
+[ext_resource type="Texture2D" uid="uid://cut6m707vy5t2" path="res://assets/cards/PlayerCard.png" id="2_l6n6i"]
+
+[node name="CharSheet" type="Panel"]
+offset_right = 128.0
+offset_bottom = 88.0
+script = ExtResource("1_kbhbo")
+
+[node name="APs" type="Label" parent="."]
+layout_mode = 0
+offset_top = -24.0
+offset_right = 128.0
+offset_bottom = 2.0
+text = "APs: 3/3"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+position = Vector2(16, 8)
+texture = ExtResource("2_l6n6i")
+centered = false
+
+[node name="Name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 9.0
+offset_right = 74.0
+offset_bottom = 24.0
+theme_override_font_sizes/font_size = 8
+text = "Liberty Valace"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="hp" type="Label" parent="."]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 8.0
+offset_right = 96.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="res" type="Label" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 8.0
+offset_right = 112.0
+offset_bottom = 23.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="a" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 24.0
+offset_right = 48.0
+offset_bottom = 39.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="d" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 35.0
+offset_right = 48.0
+offset_bottom = 50.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="w" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 46.0
+offset_right = 48.0
+offset_bottom = 61.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="i" type="Label" parent="."]
+layout_mode = 0
+offset_left = 32.0
+offset_top = 56.0
+offset_right = 48.0
+offset_bottom = 71.0
+theme_override_font_sizes/font_size = 8
+text = "10
+"
+horizontal_alignment = 1
+vertical_alignment = 1
