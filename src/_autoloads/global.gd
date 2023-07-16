@@ -21,6 +21,10 @@ var modifier_deck = [
 	[]
 ]
 
+var skill_test_required = 0
+var skill_test_type = Types.ActionType.Search
+
+
 var train = [
 	0,
 	-1
@@ -28,3 +32,4 @@ var train = [
 
 var player_position = [0, 0]
 var player_heroes = [0, 2]
+var player_treasures = [0, 0]

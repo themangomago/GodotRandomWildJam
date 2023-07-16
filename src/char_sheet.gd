@@ -14,7 +14,9 @@ func set_hero(id):
 	$hp.set_text(str(hero.stats.health))
 	$res.set_text(str(hero.stats.resilience))
 	$a.set_text(str(hero.stats.attack))
-	$d.set_text(str(hero.stats.doge))
+	$d.set_text(str(hero.stats.dodge))
 	$w.set_text(str(hero.stats.willpower))
 	$i.set_text(str(hero.stats.intelligence))
 	
+func add_treasure(player: int):
+	$g.set_text(str(Global.player_treasures[player]))

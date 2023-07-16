@@ -60,18 +60,25 @@ enum RoundPhaseDetail {
 }
 
 enum CardOwner {
-  Everyone,
-  Player1,
-  Player2,
+  Everyone = -1,
+  Player1 = 0,
+  Player2 = 1,
 }
 
 enum PlayerActive {
-  None,
-  Player1,
-  Player2,
+  None = -1,
+  Player1 = 0,
+  Player2 = 1,
 }
 
 enum WindowType {
   PlayerSelect,
   NoActions,
+}
+
+enum SkillType {
+  Attack,
+  Dodge,
+  Willpower,
+  Intelligence
 }

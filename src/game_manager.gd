@@ -3,7 +3,8 @@ extends Control
 var window_active: bool = false
 
 var TRAIN_CARD = preload("res://src/train_wagon.tscn")
-
+var fs = false
+var motion = true
 
 # Called when the node enters the scene tree for the first time.
 func _ready():
@@ -12,6 +13,8 @@ func _ready():
 	Global.gm = self
 	
 	close_window()
+	$Notification/AnimationPlayer.play("RESET")
+	$ModifierDraw/AnimationPlayer.play("RESET")
 
 	new_game()
 
@@ -38,8 +41,8 @@ func new_game():
 	
 	# Copy modifier decks
 	Global.modifier_deck = [
-		Data.modifier_deck[Global.game_difficulty].duplicate,
-		Data.modifier_deck[Global.game_difficulty].duplicate,
+		Data.modifier_deck[Global.game_difficulty].duplicate(),
+		Data.modifier_deck[Global.game_difficulty].duplicate(),
 	]
 	
 	hero_init()
@@ -52,8 +55,44 @@ func hero_init():
 	$CharSheetP1.set_hero(0)
 	$CharSheetP2.set_hero(1)
 	
-	
 
+
+func skill_test(skill: Types.SkillType, target: int):
+	var hero = Data.heroes[Global.player_heroes[Global.active_player]]
+	var player_name = hero.name
+	var skill_name: String
+	var player_skill = 0
+	match skill:
+		Types.SkillType.Attack:
+			skill_name = "Attack"
+			player_skill = hero.stats.attack
+		Types.SkillType.Dodge:
+			skill_name = "Dodge"
+			player_skill = hero.stats.dodge
+		Types.SkillType.Willpower:
+			skill_name = "Willpower"
+			player_skill = hero.stats.willpower
+		Types.SkillType.Intelligence:
+			skill_name = "Intelligence"
+			player_skill = hero.stats.intelligence
+		_: 
+			printerr("Skill not found")
+	var bonus = skill_test_calc_bonus(skill)
+	var marked_as_burned = skill_test_get_burned()
+	Global.skill_test_required = target - player_skill - bonus - marked_as_burned
+	Global.skill_test_type = Types.ActionType.Search
+	$SkillCheck/Title.set_text("Skill Test ("+ player_name +")")
+	$SkillCheck/Requirements.set_text(skill_name + "(" + str(target) + "): You will need to draw a " + str(Global.skill_test_required) + " or better.")
+	$SkillCheck.show()
+
+func skill_test_calc_bonus(skill: Types.SkillType):
+	# ToDo: Check played cards for bonuses from player. 
+	# also from another player if its dependend on the room
+	return 0
+
+func skill_test_get_burned():
+	# ToDo: Get marked as burned cards
+	return 0
 
 func round_phase_next():
 	# increase turn
@@ -133,8 +172,25 @@ func spend_action(action: Types.ActionType, payload = null):
 		$CharSheetP2.update()
 	return
 
-func action_search():
-	pass
+func action_search() -> bool:
+	var player_position = Global.player_position[Global.active_player - 1]
+	
+	# Check if searchable
+	if Global.played_train.size() <= player_position:
+		return false
+
+	# Check if treasures left
+	if Global.played_train[player_position].treasure == 0:
+		addlog("Search: No treasures left here.")
+		return false
+		
+	var search_difficulty = Global.played_train[player_position].difficulty - search_calc_bonus()
+	skill_test(Types.SkillType.Intelligence, search_difficulty)
+	return true
+
+func search_calc_bonus():
+	# TODO: search bonuses like oil lamp
+	return 0
 
 func action_move(payload: String) -> bool:
 	var player_position = Global.player_position[Global.active_player - 1]
@@ -291,9 +347,83 @@ func _on_search_button_up():
 	spend_action(Types.ActionType.Search)
 
 
-func _on_debug_modifier_p_2_button_up():
-	pass # Replace with function body.
+func draw_card_modifier(deck: int):
+	var card = Global.modifier_deck[deck].pop_front()
+	Global.modifier_deck[deck].append(card)
+	
+	match card:
+		2: $ModifierDraw.frame = 1
+		1: $ModifierDraw.frame = 2
+		0: $ModifierDraw.frame = 3
+		-1: $ModifierDraw.frame = 4
+		-2: $ModifierDraw.frame = 5
+		-3: $ModifierDraw.frame = 6
+		-4: $ModifierDraw.frame = 7
+		99: $ModifierDraw.frame = 8
+		-99: $ModifierDraw.frame = 9
+	$ModifierDraw/AnimationPlayer.play("popup")
+	
+	if Global.skill_test_required <= card:
+		$Notification/Title.set_text("Skill Test Successful")
+		if Global.skill_test_type == Types.ActionType.Search:
+			Global.played_train[Global.player_position[Global.active_player - 1]].treasure -= 1
+			Global.player_treasures[Global.player_position[Global.active_player - 1]] += 1
+			if Global.active_player == Types.PlayerActive.Player1:
+				$CharSheetP1.add_treasure(0)
+			else:
+				$CharSheetP2.add_treasure(1)
+			train_update()
+	else:
+		$Notification/Title.set_text("Skill Test Failed")
+	
+	$Notification/AnimationPlayer.play("popup")
+	$SkillCheck.hide()
+	
+	#TODO display modifier card
+	
+	if card == 99 or card == -99:
+		addlog("Shuffling modifier deck")
+		Global.modifier_deck[deck].shuffle()
 
 
 func _on_debug_modifier_p_1_button_up():
-	pass # Replace with function body.
+	if Global.active_player != Types.PlayerActive.Player1:
+		addlog("This is not your deck.")
+		return
+	draw_card_modifier(0)
+
+func _on_debug_modifier_p_2_button_up():
+	if Global.active_player != Types.PlayerActive.Player2:
+		addlog("This is not your deck.")
+		return
+	draw_card_modifier(1)
+
+
+
+func _on_debug_fs_button_up():
+
+	if fs:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		fs = false
+	else:
+		DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
+		fs = true
+
+
+func _on_debug_m_button_up():
+	if not motion:
+		$"Background/6".material.set("shader_parameter/speed", 0.05)
+		$"Background/5".material.set("shader_parameter/speed", 0.1)
+		$"Background/4".material.set("shader_parameter/speed", 0.2)
+		$"Background/3".material.set("shader_parameter/speed", 0.3)
+		$"Background/2".material.set("shader_parameter/speed", 0.4)
+		$"Background/1".material.set("shader_parameter/speed", 0.5)
+		motion = true
+	else:
+		$"Background/6".material.set("shader_parameter/speed", 0.0)
+		$"Background/5".material.set("shader_parameter/speed", 0.0)
+		$"Background/4".material.set("shader_parameter/speed", 0.0)
+		$"Background/3".material.set("shader_parameter/speed", 0.0)
+		$"Background/2".material.set("shader_parameter/speed", 0.0)
+		$"Background/1".material.set("shader_parameter/speed", 0.0)
+		motion = false

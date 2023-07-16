@@ -34,12 +34,12 @@ Intelligence: Search for goods
 
 Heroes:
 
-| Name            | Type     | Hp  | Res | att | doge | will | int |
-| --------------- | -------- | --- | --- | --- | ---- | ---- | --- |
-| Angel Eyes      | Fighter  | 8   | 7   | 4   | 1    | 3    | 2   |
-| Liberty Valance | Fighter  | 7   | 8   | 3   | 2    | 2    | 3   |
-| El Indio        | Gatherer | 6   | 9   | 2   | 3    | 2    | 4   |
-| Calvera         | Gatherer | 6   | 8   | 2   | 4    | 2    | 5   |
-| Jack Wilson     | Support  | 4   | 10  | 0   | 3    | 5    | 3   |
-| Herod           | Support  | 5   | 9   | 1   | 4    | 4    | 3   |
+| Name            | Type     | Hp  | Res | att | dodge | will | int |
+| --------------- | -------- | --- | --- | --- | ----- | ---- | --- |
+| Angel Eyes      | Fighter  | 8   | 7   | 4   | 1     | 3    | 2   |
+| Liberty Valance | Fighter  | 7   | 8   | 3   | 2     | 2    | 3   |
+| El Indio        | Gatherer | 6   | 9   | 2   | 3     | 2    | 4   |
+| Calvera         | Gatherer | 6   | 8   | 2   | 4     | 2    | 5   |
+| Jack Wilson     | Support  | 4   | 10  | 0   | 3     | 5    | 3   |
+| Herod           | Support  | 5   | 9   | 1   | 4     | 4    | 3   |
 

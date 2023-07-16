@@ -1,9 +1,151 @@
-[gd_scene load_steps=5 format=3 uid="uid://dqcwmuvs02sdx"]
+[gd_scene load_steps=27 format=3 uid="uid://dqcwmuvs02sdx"]
 
 [ext_resource type="Texture2D" uid="uid://cjxvcj0aimtxa" path="res://dummy.png" id="1_8cjmr"]
 [ext_resource type="Script" path="res://src/game_manager.gd" id="1_ntnnl"]
+[ext_resource type="Texture2D" uid="uid://cvddx1rtog8uu" path="res://assets/background/background6.png" id="3_2p320"]
 [ext_resource type="PackedScene" uid="uid://wrag78ilftgy" path="res://src/deck.tscn" id="3_he6rw"]
+[ext_resource type="Texture2D" uid="uid://d0ttx6ocbd7a" path="res://assets/background/background3.png" id="3_wlko4"]
+[ext_resource type="Texture2D" uid="uid://lrq2rjs7msyq" path="res://assets/background/background5.png" id="4_8tb4j"]
+[ext_resource type="Texture2D" uid="uid://dq01jb5ylxwd7" path="res://assets/background/background2.png" id="4_bwg0o"]
 [ext_resource type="PackedScene" uid="uid://bvvtk2erm0o8d" path="res://src/char_sheet.tscn" id="4_e023n"]
+[ext_resource type="Texture2D" uid="uid://bly3vlkldgoew" path="res://assets/cards/modifiers.png" id="4_sl0oa"]
+[ext_resource type="Texture2D" uid="uid://h3hx2yhp1ixm" path="res://assets/background/background4.png" id="5_77tke"]
+[ext_resource type="Texture2D" uid="uid://c1fsj3uwu18r5" path="res://assets/background/background1.png" id="5_hx7rd"]
+[ext_resource type="Shader" path="res://src/scroll.gdshader" id="7_pbrlv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iuwb3"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 0.05
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5uqp4"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 0.1
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_pcw13"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t0ltn"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 0.3
+
+[sub_resource type="Shader" id="Shader_pjty7"]
+code = "shader_type canvas_item;
+
+uniform float speed = 1.0;
+
+void fragment() {
+	COLOR = texture(TEXTURE, vec2(UV.x + TIME * speed, UV.y));
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_onido"]
+shader = SubResource("Shader_pjty7")
+shader_parameter/speed = 0.4
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3wkj2"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 0.5
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mrxlh"]
+shader = ExtResource("7_pbrlv")
+shader_parameter/speed = 1.0
+
+[sub_resource type="Animation" id="Animation_vpi8k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bq6is"]
+resource_name = "popup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uy46r"]
+_data = {
+"RESET": SubResource("Animation_vpi8k"),
+"popup": SubResource("Animation_bq6is")
+}
+
+[sub_resource type="Animation" id="Animation_mc7u5"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(480, 600)]
+}
+
+[sub_resource type="Animation" id="Animation_j71rj"]
+resource_name = "popup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(2, 2), Vector2(2, 2), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.7, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(480, 568), Vector2(480, 352), Vector2(480, 352), Vector2(480, 568)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4gsdv"]
+_data = {
+"RESET": SubResource("Animation_mc7u5"),
+"popup": SubResource("Animation_j71rj")
+}
 
 [node name="GameManager" type="Control"]
 texture_filter = 1
@@ -16,6 +158,7 @@ grow_vertical = 2
 script = ExtResource("1_ntnnl")
 
 [node name="dummy" type="TextureRect" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -24,36 +167,62 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("1_8cjmr")
 
-[node name="TrainPile" parent="." instance=ExtResource("3_he6rw")]
-layout_mode = 0
-offset_left = 232.0
-offset_top = 8.0
-offset_right = 296.0
-offset_bottom = 104.0
-deck_type = 1
+[node name="Background" type="Node2D" parent="."]
+texture_repeat = 2
+scale = Vector2(2, 2)
+
+[node name="6" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_iuwb3")
+texture = ExtResource("3_2p320")
+centered = false
+
+[node name="5" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_5uqp4")
+texture = ExtResource("4_8tb4j")
+centered = false
+
+[node name="4" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_pcw13")
+texture = ExtResource("5_77tke")
+centered = false
+
+[node name="3" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_t0ltn")
+texture = ExtResource("3_wlko4")
+centered = false
+
+[node name="2" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_onido")
+texture = ExtResource("4_bwg0o")
+centered = false
+
+[node name="1" type="Sprite2D" parent="Background"]
+material = SubResource("ShaderMaterial_3wkj2")
+texture = ExtResource("5_hx7rd")
+centered = false
 
 [node name="EncounterPile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
-offset_left = 136.0
+offset_left = 128.0
 offset_top = 8.0
-offset_right = 200.0
+offset_right = 192.0
 offset_bottom = 104.0
 deck_type = 2
 
 [node name="Player1Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
 offset_left = 360.0
-offset_top = 256.0
+offset_top = 280.0
 offset_right = 424.0
-offset_bottom = 352.0
+offset_bottom = 376.0
 deck_owner = 1
 
 [node name="Player2Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
 offset_left = 536.0
-offset_top = 256.0
+offset_top = 280.0
 offset_right = 600.0
-offset_bottom = 352.0
+offset_bottom = 376.0
 deck_owner = 2
 
 [node name="Log" type="TextEdit" parent="."]
@@ -66,73 +235,86 @@ editable = false
 
 [node name="Train" type="HBoxContainer" parent="."]
 layout_mode = 0
-offset_top = 104.0
+offset_top = 136.0
 offset_right = 960.0
-offset_bottom = 208.0
+offset_bottom = 240.0
 theme_override_constants/separation = 8
 alignment = 1
 
 [node name="MoveLeft" type="Button" parent="."]
 layout_mode = 0
 offset_left = 344.0
-offset_top = 216.0
+offset_top = 240.0
 offset_right = 424.0
-offset_bottom = 247.0
+offset_bottom = 271.0
 text = "<- Move"
 
 [node name="MoveRight" type="Button" parent="."]
 layout_mode = 0
 offset_left = 536.0
-offset_top = 216.0
+offset_top = 240.0
 offset_right = 616.0
-offset_bottom = 247.0
+offset_bottom = 271.0
 text = "Move ->"
 
 [node name="EndTurn" type="Button" parent="."]
+material = SubResource("ShaderMaterial_mrxlh")
 layout_mode = 0
 offset_left = 440.0
-offset_top = 424.0
+offset_top = 448.0
 offset_right = 520.0
-offset_bottom = 464.0
+offset_bottom = 488.0
 text = "EndTurn"
+
+[node name="ModifierDeckP1" type="Sprite2D" parent="."]
+position = Vector2(224, 400)
+texture = ExtResource("4_sl0oa")
+centered = false
+hframes = 10
 
 [node name="DebugModifierP1" type="Button" parent="."]
 layout_mode = 0
 offset_left = 216.0
-offset_top = 376.0
+offset_top = 400.0
 offset_right = 296.0
-offset_bottom = 416.0
+offset_bottom = 440.0
 text = "Modifier"
+
+[node name="ModifierDeckP2" type="Sprite2D" parent="."]
+position = Vector2(672, 400)
+texture = ExtResource("4_sl0oa")
+centered = false
+hframes = 10
 
 [node name="DebugModifierP2" type="Button" parent="."]
 layout_mode = 0
 offset_left = 664.0
-offset_top = 376.0
+offset_top = 400.0
 offset_right = 744.0
-offset_bottom = 416.0
+offset_bottom = 440.0
 text = "Modifier"
 
 [node name="Search" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 216.0
+offset_top = 240.0
 offset_right = 520.0
-offset_bottom = 248.0
+offset_bottom = 272.0
 text = "Search"
 
 [node name="CharSheetP1" parent="." instance=ExtResource("4_e023n")]
 layout_mode = 0
 offset_left = 304.0
-offset_top = 376.0
+offset_top = 400.0
 offset_right = 432.0
-offset_bottom = 464.0
+offset_bottom = 488.0
 
 [node name="CharSheetP2" parent="." instance=ExtResource("4_e023n")]
 layout_mode = 0
 offset_left = 528.0
-offset_top = 376.0
+offset_top = 400.0
 offset_right = 656.0
-offset_bottom = 464.0
+offset_bottom = 488.0
 
 [node name="PhaseDisplay" type="Panel" parent="."]
 layout_mode = 1
@@ -155,6 +337,98 @@ text = "Phase"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="SkillCheck" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 368.0
+offset_top = 40.0
+offset_right = 592.0
+offset_bottom = 168.0
+
+[node name="Title" type="Label" parent="SkillCheck"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -64.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Skill Test (Tex Avery)"
+metadata/_edit_lock_ = true
+
+[node name="Requirements" type="Label" parent="SkillCheck"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = -8.0
+offset_bottom = -50.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 11
+text = "Willpower(4): You will need to draw a -1 or better."
+autowrap_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="Action" type="Label" parent="SkillCheck"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 72.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 11
+text = "Draw from modifier deck for the skill test. Or burn cards to boost your skill first."
+autowrap_mode = 3
+metadata/_edit_lock_ = true
+
+[node name="Notification" type="Panel" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 368.0
+offset_top = 176.0
+offset_right = 592.0
+offset_bottom = 208.0
+
+[node name="Title" type="Label" parent="Notification"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_font_sizes/font_size = 12
+text = "Skill Test Failed"
+horizontal_alignment = 1
+vertical_alignment = 1
+metadata/_edit_lock_ = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Notification"]
+libraries = {
+"": SubResource("AnimationLibrary_uy46r")
+}
+
+[node name="ModifierDraw" type="Sprite2D" parent="."]
+position = Vector2(480, 600)
+texture = ExtResource("4_sl0oa")
+hframes = 10
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ModifierDraw"]
+libraries = {
+"": SubResource("AnimationLibrary_4gsdv")
+}
+
 [node name="Windows" type="ColorRect" parent="."]
 visible = false
 layout_mode = 1
@@ -166,12 +440,11 @@ grow_vertical = 2
 color = Color(0, 0, 0, 0.505882)
 
 [node name="PlayerSelect" type="Panel" parent="Windows"]
-visible = false
 layout_mode = 0
-offset_left = 328.0
-offset_top = 240.0
-offset_right = 552.0
-offset_bottom = 336.0
+offset_left = 376.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 296.0
 
 [node name="Label" type="Label" parent="Windows/PlayerSelect"]
 layout_mode = 0
@@ -198,12 +471,11 @@ offset_bottom = 79.0
 text = "Player 2"
 
 [node name="NoActions" type="Panel" parent="Windows"]
-visible = false
 layout_mode = 0
-offset_left = 328.0
-offset_top = 240.0
-offset_right = 552.0
-offset_bottom = 336.0
+offset_left = 376.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 296.0
 
 [node name="Label" type="Label" parent="Windows/NoActions"]
 layout_mode = 0
@@ -224,19 +496,34 @@ text = "EndTurn"
 
 [node name="DebugNext" type="Button" parent="."]
 layout_mode = 0
-offset_left = 440.0
-offset_top = 40.0
-offset_right = 535.0
-offset_bottom = 71.0
+offset_left = 248.0
+offset_right = 343.0
+offset_bottom = 31.0
 text = "DebugNext"
 
 [node name="DebugLabel" type="Label" parent="."]
 layout_mode = 0
-offset_left = 320.0
-offset_top = 40.0
-offset_right = 440.0
-offset_bottom = 136.0
+offset_left = 72.0
+offset_top = 104.0
+offset_right = 192.0
+offset_bottom = 200.0
 theme_override_font_sizes/font_size = 10
+
+[node name="DebugFS" type="Button" parent="."]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 34.0
+offset_bottom = 39.0
+text = "FS"
+
+[node name="DebugM" type="Button" parent="."]
+layout_mode = 0
+offset_left = 48.0
+offset_top = 8.0
+offset_right = 74.0
+offset_bottom = 39.0
+text = "M"
 
 [connection signal="button_up" from="MoveLeft" to="." method="_on_move_left_button_up"]
 [connection signal="button_up" from="MoveRight" to="." method="_on_move_right_button_up"]
@@ -248,3 +535,5 @@ theme_override_font_sizes/font_size = 10
 [connection signal="button_up" from="Windows/PlayerSelect/P2" to="." method="_on_p_2_button_up"]
 [connection signal="button_up" from="Windows/NoActions/NoActionsEndTurn" to="." method="_on_no_actions_end_turn_button_up"]
 [connection signal="button_up" from="DebugNext" to="." method="_on_debug_next_button_up"]
+[connection signal="button_up" from="DebugFS" to="." method="_on_debug_fs_button_up"]
+[connection signal="button_up" from="DebugM" to="." method="_on_debug_m_button_up"]
