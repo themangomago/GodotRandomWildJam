@@ -1,6 +1,5 @@
 [gd_scene load_steps=27 format=3 uid="uid://dqcwmuvs02sdx"]
 
-[ext_resource type="Texture2D" uid="uid://cjxvcj0aimtxa" path="res://dummy.png" id="1_8cjmr"]
 [ext_resource type="Script" path="res://src/game_manager.gd" id="1_ntnnl"]
 [ext_resource type="Texture2D" uid="uid://cvddx1rtog8uu" path="res://assets/background/background6.png" id="3_2p320"]
 [ext_resource type="PackedScene" uid="uid://wrag78ilftgy" path="res://src/deck.tscn" id="3_he6rw"]
@@ -12,22 +11,23 @@
 [ext_resource type="Texture2D" uid="uid://h3hx2yhp1ixm" path="res://assets/background/background4.png" id="5_77tke"]
 [ext_resource type="Texture2D" uid="uid://c1fsj3uwu18r5" path="res://assets/background/background1.png" id="5_hx7rd"]
 [ext_resource type="Shader" path="res://src/scroll.gdshader" id="7_pbrlv"]
+[ext_resource type="Texture2D" path="res://assets/test/dummy.png" id="9_p5rfa"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuwb3"]
 shader = ExtResource("7_pbrlv")
-shader_parameter/speed = 0.05
+shader_parameter/speed = 0.04
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5uqp4"]
 shader = ExtResource("7_pbrlv")
-shader_parameter/speed = 0.1
+shader_parameter/speed = 0.06
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pcw13"]
 shader = ExtResource("7_pbrlv")
-shader_parameter/speed = 0.2
+shader_parameter/speed = 0.08
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t0ltn"]
 shader = ExtResource("7_pbrlv")
-shader_parameter/speed = 0.3
+shader_parameter/speed = 0.1
 
 [sub_resource type="Shader" id="Shader_pjty7"]
 code = "shader_type canvas_item;
@@ -41,11 +41,11 @@ void fragment() {
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_onido"]
 shader = SubResource("Shader_pjty7")
-shader_parameter/speed = 0.4
+shader_parameter/speed = 0.12
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3wkj2"]
 shader = ExtResource("7_pbrlv")
-shader_parameter/speed = 0.5
+shader_parameter/speed = 0.14
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mrxlh"]
 shader = ExtResource("7_pbrlv")
@@ -157,16 +157,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_ntnnl")
 
-[node name="dummy" type="TextureRect" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-texture = ExtResource("1_8cjmr")
-
 [node name="Background" type="Node2D" parent="."]
 texture_repeat = 2
 scale = Vector2(2, 2)
@@ -201,28 +191,37 @@ material = SubResource("ShaderMaterial_3wkj2")
 texture = ExtResource("5_hx7rd")
 centered = false
 
+[node name="dummy" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("9_p5rfa")
+
 [node name="EncounterPile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
-offset_left = 128.0
-offset_top = 8.0
-offset_right = 192.0
-offset_bottom = 104.0
+offset_left = 872.0
+offset_top = 128.0
+offset_right = 936.0
+offset_bottom = 224.0
 deck_type = 2
 
 [node name="Player1Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
 offset_left = 360.0
-offset_top = 280.0
+offset_top = 256.0
 offset_right = 424.0
-offset_bottom = 376.0
+offset_bottom = 352.0
 deck_owner = 1
 
 [node name="Player2Pile" parent="." instance=ExtResource("3_he6rw")]
 layout_mode = 0
 offset_left = 536.0
-offset_top = 280.0
+offset_top = 256.0
 offset_right = 600.0
-offset_bottom = 376.0
+offset_bottom = 352.0
 deck_owner = 2
 
 [node name="Log" type="TextEdit" parent="."]
@@ -244,17 +243,17 @@ alignment = 1
 [node name="MoveLeft" type="Button" parent="."]
 layout_mode = 0
 offset_left = 344.0
-offset_top = 240.0
+offset_top = 88.0
 offset_right = 424.0
-offset_bottom = 271.0
+offset_bottom = 119.0
 text = "<- Move"
 
 [node name="MoveRight" type="Button" parent="."]
 layout_mode = 0
 offset_left = 536.0
-offset_top = 240.0
+offset_top = 88.0
 offset_right = 616.0
-offset_bottom = 271.0
+offset_bottom = 119.0
 text = "Move ->"
 
 [node name="EndTurn" type="Button" parent="."]
@@ -297,9 +296,9 @@ text = "Modifier"
 [node name="Search" type="Button" parent="."]
 layout_mode = 0
 offset_left = 440.0
-offset_top = 240.0
+offset_top = 88.0
 offset_right = 520.0
-offset_bottom = 272.0
+offset_bottom = 120.0
 text = "Search"
 
 [node name="CharSheetP1" parent="." instance=ExtResource("4_e023n")]

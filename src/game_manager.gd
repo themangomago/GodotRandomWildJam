@@ -157,7 +157,12 @@ func spend_action(action: Types.ActionType, payload = null):
 			retVal = action_move(payload)
 		Types.ActionType.Search:
 			retVal = action_search()
-
+		Types.ActionType.Attack:
+			pass
+		Types.ActionType.Evade:
+			pass
+		Types.ActionType.PlayCard:
+			pass
 
 
 	if not retVal:

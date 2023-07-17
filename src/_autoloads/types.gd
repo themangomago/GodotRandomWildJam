@@ -13,6 +13,12 @@ enum PlayerCardType {
   Weakness,
 }
 
+enum AssetLocationType {
+  Head,
+  Hand,
+  Body
+}
+
 enum EncounterCardType {
   Enemy,
   Treachery,
@@ -56,7 +62,8 @@ enum RoundPhaseDetail {
   ResupplySecondPlayer = 7,
   DiscardFirstPlayer = 8,
   DiscardSecondPlayer = 9,
-  CheckEndGame = 10,
+  DrawEnemyCard = 10,
+  CheckEndGame = 11,
 }
 
 enum CardOwner {
@@ -82,3 +89,4 @@ enum SkillType {
   Willpower,
   Intelligence
 }
+

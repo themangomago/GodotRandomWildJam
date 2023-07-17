@@ -1,6 +1,24 @@
 # GodotRandomWildJam
 
 
+TODOs:
+
+- [x] Add player cards
+- [x] Add decks for selected players
+- [x] Add enemy/treachery cards
+
+Thuesday:
+- [ ] Action: Play card mechanism
+- [ ] Action: Evade/Attack mechanism
+- [ ] Draw encounter mechanism
+  
+Wednesday:
+- [ ] Move enemy mechanism
+- [ ] Engage enemy mechanism
+- [ ] Resupply mechanism (draw/discard)
+
+- [ ] All hero decks
+
 
 Round Phase Detail:
 
@@ -21,6 +39,9 @@ Round Phase Detail:
   3.1 Get one gold
   3.2 Draw 1 card
   3.3 Discard down to 5 cards
+1. Draw encounter card
+2. Add resilience; check end game
+
 
 Player Stats:
 
