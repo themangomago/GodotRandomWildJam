@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=3 uid="uid://dqcwmuvs02sdx"]
+[gd_scene load_steps=29 format=3 uid="uid://dqcwmuvs02sdx"]
 
 [ext_resource type="Script" path="res://src/game_manager.gd" id="1_ntnnl"]
 [ext_resource type="Texture2D" uid="uid://cvddx1rtog8uu" path="res://assets/background/background6.png" id="3_2p320"]
@@ -11,7 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://h3hx2yhp1ixm" path="res://assets/background/background4.png" id="5_77tke"]
 [ext_resource type="Texture2D" uid="uid://c1fsj3uwu18r5" path="res://assets/background/background1.png" id="5_hx7rd"]
 [ext_resource type="Shader" path="res://src/scroll.gdshader" id="7_pbrlv"]
-[ext_resource type="Texture2D" path="res://assets/test/dummy.png" id="9_p5rfa"]
+[ext_resource type="Texture2D" uid="uid://cs7oipvtyeubp" path="res://assets/dummy.png" id="9_4fj3o"]
+[ext_resource type="PackedScene" uid="uid://cc28vpkglgaar" path="res://src/card.tscn" id="11_x01wh"]
+[ext_resource type="FontFile" uid="uid://cubxkx25d5we" path="res://assets/fonts/TinyUnicode.ttf" id="13_xw0jc"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuwb3"]
 shader = ExtResource("7_pbrlv")
@@ -198,31 +200,101 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("9_p5rfa")
+texture = ExtResource("9_4fj3o")
 
-[node name="EncounterPile" parent="." instance=ExtResource("3_he6rw")]
-layout_mode = 0
-offset_left = 872.0
-offset_top = 128.0
-offset_right = 936.0
-offset_bottom = 224.0
-deck_type = 2
+[node name="Player1" type="Node" parent="."]
 
-[node name="Player1Pile" parent="." instance=ExtResource("3_he6rw")]
-layout_mode = 0
+[node name="Pile" parent="Player1" instance=ExtResource("3_he6rw")]
 offset_left = 360.0
 offset_top = 256.0
 offset_right = 424.0
 offset_bottom = 352.0
 deck_owner = 1
 
-[node name="Player2Pile" parent="." instance=ExtResource("3_he6rw")]
-layout_mode = 0
+[node name="Hand" type="HBoxContainer" parent="Player1"]
+offset_left = 40.0
+offset_top = 480.0
+offset_right = 432.0
+offset_bottom = 584.0
+theme_override_constants/separation = -12
+alignment = 1
+
+[node name="Discard" parent="Player1" instance=ExtResource("11_x01wh")]
+offset_left = 288.0
+offset_top = 256.0
+offset_right = 352.0
+offset_bottom = 352.0
+
+[node name="Asset0" parent="Player1" instance=ExtResource("11_x01wh")]
+offset_left = 8.0
+offset_top = 360.0
+offset_right = 72.0
+offset_bottom = 456.0
+
+[node name="Asset1" parent="Player1" instance=ExtResource("11_x01wh")]
+offset_left = 80.0
+offset_top = 360.0
+offset_right = 144.0
+offset_bottom = 456.0
+
+[node name="Asset2" parent="Player1" instance=ExtResource("11_x01wh")]
+offset_left = 152.0
+offset_top = 360.0
+offset_right = 216.0
+offset_bottom = 456.0
+
+[node name="CharSheet" parent="Player1" instance=ExtResource("4_e023n")]
+offset_left = 304.0
+offset_top = 400.0
+offset_right = 432.0
+offset_bottom = 488.0
+
+[node name="Player2" type="Node" parent="."]
+
+[node name="Pile" parent="Player2" instance=ExtResource("3_he6rw")]
 offset_left = 536.0
 offset_top = 256.0
 offset_right = 600.0
 offset_bottom = 352.0
 deck_owner = 2
+
+[node name="Hand" type="HBoxContainer" parent="Player2"]
+offset_left = 544.0
+offset_top = 480.0
+offset_right = 936.0
+offset_bottom = 584.0
+theme_override_constants/separation = -12
+alignment = 1
+
+[node name="Discard" parent="Player2" instance=ExtResource("11_x01wh")]
+offset_left = 608.0
+offset_top = 256.0
+offset_right = 672.0
+offset_bottom = 352.0
+
+[node name="Asset0" parent="Player2" instance=ExtResource("11_x01wh")]
+offset_left = 744.0
+offset_top = 360.0
+offset_right = 808.0
+offset_bottom = 456.0
+
+[node name="Asset1" parent="Player2" instance=ExtResource("11_x01wh")]
+offset_left = 816.0
+offset_top = 360.0
+offset_right = 880.0
+offset_bottom = 456.0
+
+[node name="Asset2" parent="Player2" instance=ExtResource("11_x01wh")]
+offset_left = 888.0
+offset_top = 360.0
+offset_right = 952.0
+offset_bottom = 456.0
+
+[node name="CharSheet" parent="Player2" instance=ExtResource("4_e023n")]
+offset_left = 528.0
+offset_top = 400.0
+offset_right = 656.0
+offset_bottom = 488.0
 
 [node name="Log" type="TextEdit" parent="."]
 layout_mode = 0
@@ -239,6 +311,14 @@ offset_right = 960.0
 offset_bottom = 240.0
 theme_override_constants/separation = 8
 alignment = 1
+
+[node name="EncounterPile" parent="." instance=ExtResource("3_he6rw")]
+layout_mode = 0
+offset_left = 872.0
+offset_top = 128.0
+offset_right = 936.0
+offset_bottom = 224.0
+deck_type = 2
 
 [node name="MoveLeft" type="Button" parent="."]
 layout_mode = 0
@@ -266,7 +346,7 @@ offset_bottom = 488.0
 text = "EndTurn"
 
 [node name="ModifierDeckP1" type="Sprite2D" parent="."]
-position = Vector2(224, 400)
+position = Vector2(224, 408)
 texture = ExtResource("4_sl0oa")
 centered = false
 hframes = 10
@@ -280,7 +360,7 @@ offset_bottom = 440.0
 text = "Modifier"
 
 [node name="ModifierDeckP2" type="Sprite2D" parent="."]
-position = Vector2(672, 400)
+position = Vector2(672, 408)
 texture = ExtResource("4_sl0oa")
 centered = false
 hframes = 10
@@ -300,20 +380,6 @@ offset_top = 88.0
 offset_right = 520.0
 offset_bottom = 120.0
 text = "Search"
-
-[node name="CharSheetP1" parent="." instance=ExtResource("4_e023n")]
-layout_mode = 0
-offset_left = 304.0
-offset_top = 400.0
-offset_right = 432.0
-offset_bottom = 488.0
-
-[node name="CharSheetP2" parent="." instance=ExtResource("4_e023n")]
-layout_mode = 0
-offset_left = 528.0
-offset_top = 400.0
-offset_right = 656.0
-offset_bottom = 488.0
 
 [node name="PhaseDisplay" type="Panel" parent="."]
 layout_mode = 1
@@ -430,6 +496,7 @@ libraries = {
 
 [node name="Windows" type="ColorRect" parent="."]
 visible = false
+z_index = 102
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -524,6 +591,29 @@ offset_right = 74.0
 offset_bottom = 39.0
 text = "M"
 
+[node name="Label3" type="Label" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 88.0
+offset_right = 192.0
+offset_bottom = 160.0
+theme_override_fonts/font = ExtResource("13_xw0jc")
+theme_override_font_sizes/font_size = 8
+text = "test"
+
+[node name="Label4" type="Label" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 104.0
+offset_right = 192.0
+offset_bottom = 176.0
+theme_override_fonts/font = ExtResource("13_xw0jc")
+theme_override_font_sizes/font_size = 16
+text = "test"
+
+[connection signal="draw_card" from="Player1/Pile" to="." method="_on_player_1_pile_draw_card"]
+[connection signal="draw_card" from="Player2/Pile" to="." method="_on_player_2_pile_draw_card"]
+[connection signal="draw_card" from="EncounterPile" to="." method="_on_encounter_pile_draw_card"]
 [connection signal="button_up" from="MoveLeft" to="." method="_on_move_left_button_up"]
 [connection signal="button_up" from="MoveRight" to="." method="_on_move_right_button_up"]
 [connection signal="button_up" from="EndTurn" to="." method="_on_end_turn_button_up"]

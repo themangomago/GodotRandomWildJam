@@ -1,9 +1,12 @@
-[gd_scene load_steps=3 format=3 uid="uid://cc28vpkglgaar"]
+[gd_scene load_steps=5 format=3 uid="uid://cc28vpkglgaar"]
 
-[ext_resource type="Texture2D" uid="uid://bcj4n2s85x420" path="res://assets/cards/traindummy.png" id="1_0mhtk"]
 [ext_resource type="Script" path="res://src/card.gd" id="1_76nwq"]
+[ext_resource type="Texture2D" uid="uid://bivw2jg6hlyih" path="res://assets/cards/player_cards.png" id="2_5yj4m"]
+[ext_resource type="Texture2D" uid="uid://dben4apaqmcpu" path="res://assets/cards/numbers.png" id="3_2w1vv"]
+[ext_resource type="FontFile" uid="uid://cubxkx25d5we" path="res://assets/fonts/TinyUnicode.ttf" id="4_5etbj"]
 
 [node name="Card" type="Control"]
+texture_filter = 1
 custom_minimum_size = Vector2(64, 96)
 layout_mode = 3
 anchors_preset = 0
@@ -11,8 +14,71 @@ offset_right = 64.0
 offset_bottom = 96.0
 script = ExtResource("1_76nwq")
 
-[node name="Card" type="Sprite2D" parent="."]
-texture = ExtResource("1_0mhtk")
-centered = false
-hframes = 3
+[node name="Card" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 32.0
+offset_top = 48.0
+offset_right = 32.0
+offset_bottom = 48.0
+mouse_filter = 1
+
+[node name="Card" type="Sprite2D" parent="Card"]
+texture = ExtResource("2_5yj4m")
+hframes = 31
+
+[node name="Costs" type="Sprite2D" parent="Card"]
+position = Vector2(-25, -41)
+texture = ExtResource("3_2w1vv")
+hframes = 7
+
+[node name="Title" type="Label" parent="Card"]
+layout_mode = 0
+offset_left = -23.0
+offset_top = -47.0
+offset_right = 29.0
+offset_bottom = -36.0
+theme_override_fonts/font = ExtResource("4_5etbj")
+theme_override_font_sizes/font_size = 9
+text = "Fortified Homestead"
+horizontal_alignment = 1
+
+[node name="CardZoom" type="Control" parent="."]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_left = 32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = -32.0
+mouse_filter = 1
+
+[node name="CardZoom" type="Sprite2D" parent="CardZoom"]
+z_index = 99
+scale = Vector2(2, 2)
+texture = ExtResource("2_5yj4m")
+hframes = 31
 frame = 1
+
+[node name="Costs" type="Sprite2D" parent="CardZoom"]
+z_index = 100
+position = Vector2(-50, -82)
+scale = Vector2(2, 2)
+texture = ExtResource("3_2w1vv")
+hframes = 7
+
+[node name="Title" type="Label" parent="CardZoom"]
+z_index = 100
+layout_mode = 0
+offset_left = -46.0
+offset_top = -91.0
+offset_right = 56.0
+offset_bottom = -74.0
+theme_override_fonts/font = ExtResource("4_5etbj")
+theme_override_font_sizes/font_size = 16
+text = "Fortified Homestead"
+horizontal_alignment = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

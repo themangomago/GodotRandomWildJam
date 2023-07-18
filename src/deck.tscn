@@ -2,21 +2,16 @@
 
 [ext_resource type="Texture2D" uid="uid://cxifun4iy5h35" path="res://assets/cards/empty_deck.png" id="1_fye6m"]
 [ext_resource type="Script" path="res://src/deck.gd" id="2_ppd7q"]
-[ext_resource type="Texture2D" uid="uid://ch24vs7b13csq" path="res://assets/cards/cards.png" id="2_xm41a"]
+[ext_resource type="PackedScene" uid="uid://cc28vpkglgaar" path="res://src/card.tscn" id="3_b6lan"]
 
 [node name="Deck" type="TextureRect"]
 texture_filter = 1
 offset_right = 64.0
 offset_bottom = 96.0
-mouse_filter = 0
 texture = ExtResource("1_fye6m")
 stretch_mode = 4
 script = ExtResource("2_ppd7q")
 
-[node name="Card" type="Sprite2D" parent="."]
-texture = ExtResource("2_xm41a")
-centered = false
-hframes = 5
-frame = 1
+[node name="Card" parent="." instance=ExtResource("3_b6lan")]
 
-[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="gui_input" from="Card" to="." method="_on_card_gui_input"]

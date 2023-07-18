@@ -3,6 +3,7 @@ extends Control
 var window_active: bool = false
 
 var TRAIN_CARD = preload("res://src/train_wagon.tscn")
+var CARD_SCENE = preload("res://src/card.tscn")
 var fs = false
 var motion = true
 
@@ -27,14 +28,16 @@ func _process(delta):
 		"\nfirst: " + str(Global.first_player) +\
 		"\nsecond: " + str(Global.second_player) +\
 		"\nactions: " + str(Global.action_points) +\
-		"\npositions: " + str(Global.player_position)
+		"\npositions: " + str(Global.player_position)+\
+		"\nassets: " + str(Global.played_assets)+\
+		"\nactive: " + str(Global.played_skills_active)
 	)
 
 func new_game():
 	randomize()
 	
 	# Train cards
-	Global.train_deck = Data.train_deck.duplicate()
+	Global.train_deck = Data.train_cards.duplicate()
 	Global.train_deck.shuffle()
 	Global.is_engine_found = false
 	train_init()
@@ -52,9 +55,30 @@ func new_game():
 
 
 func hero_init():
-	$CharSheetP1.set_hero(0)
-	$CharSheetP2.set_hero(1)
 	
+	Global.player_treasures = [3, 3]
+
+	
+	$Player1/CharSheet.setup(0, Global.player_heroes[0])
+	$Player2/CharSheet.setup(1, Global.player_heroes[1])
+	
+	# Get player cards, add weakness, shuffle
+	for i in range(2):
+		Global.player_decks[i] = Data.hero_decks[Global.player_heroes[i]]
+		# Add weakness
+		var rand_1 = randi() % 6
+		var rand_2 = randi() % 6 
+		while rand_1 == rand_2: rand_2 = randi() % 6
+		Global.player_decks[i][0] = rand_1
+		Global.player_decks[i][1] = rand_2
+		
+		# Shuffle
+		Global.player_decks[i].shuffle()
+
+	for i in range(3):
+		# Deal
+		player_draw_card(Types.PlayerActive.Player1, true)
+		player_draw_card(Types.PlayerActive.Player2, true)
 
 
 func skill_test(skill: Types.SkillType, target: int):
@@ -106,8 +130,10 @@ func round_phase_next():
 			$PhaseDisplay/Label.set_text("Player Action Phase")
 			display_window(Types.WindowType.PlayerSelect)
 		Types.RoundPhaseDetail.FirstPlayerAction:
+			$PhaseDisplay/Label.set_text("Player Action Phase: Player " + str(Global.active_player + 1))
 			addlog("Player" + str(Global.active_player) + "'s turn...")
 		Types.RoundPhaseDetail.SecondPlayerAction:
+			$PhaseDisplay/Label.set_text("Player Action Phase: Player " + str(Global.active_player + 1))
 			addlog("Player" + str(Global.active_player) + "'s turn...")
 		Types.RoundPhaseDetail.EncounterMove:
 			$PhaseDisplay/Label.set_text("Enemy Action Phase")
@@ -141,6 +167,7 @@ func round_phase_next():
 			printerr("Undefined round phase")
 
 func spend_action(action: Types.ActionType, payload = null):
+	print("spend_action")
 	# Only callable in player phase
 	if Global.round_phase != Types.RoundPhaseDetail.FirstPlayerAction and Global.round_phase != Types.RoundPhaseDetail.SecondPlayerAction:
 		return
@@ -162,7 +189,9 @@ func spend_action(action: Types.ActionType, payload = null):
 		Types.ActionType.Evade:
 			pass
 		Types.ActionType.PlayCard:
-			pass
+			retVal = player_play_card(payload.id, payload.link)
+		_:
+			printerr("unknown action")
 
 
 	if not retVal:
@@ -171,10 +200,7 @@ func spend_action(action: Types.ActionType, payload = null):
 
 	# Update
 	Global.action_points -= 1
-	if Global.active_player == Types.PlayerActive.Player1:
-		$CharSheetP1.update()
-	else:
-		$CharSheetP2.update()
+	get_node("Player"+str(Global.active_player + 1)+"/CharSheet").update()
 	return
 
 func action_search() -> bool:
@@ -335,6 +361,7 @@ func _on_end_turn_button_up():
 	if Global.active_player == Global.first_player:
 		Global.active_player = Global.second_player
 	Global.action_points = 3
+	Global.played_skills_active = []
 	
 	round_phase_next()
 	close_window()
@@ -374,9 +401,9 @@ func draw_card_modifier(deck: int):
 			Global.played_train[Global.player_position[Global.active_player - 1]].treasure -= 1
 			Global.player_treasures[Global.player_position[Global.active_player - 1]] += 1
 			if Global.active_player == Types.PlayerActive.Player1:
-				$CharSheetP1.add_treasure(0)
+				$CharSheetP1.update_treasure()
 			else:
-				$CharSheetP2.add_treasure(1)
+				$CharSheetP2.update_treasure()
 			train_update()
 	else:
 		$Notification/Title.set_text("Skill Test Failed")
@@ -432,3 +459,109 @@ func _on_debug_m_button_up():
 		$"Background/2".material.set("shader_parameter/speed", 0.0)
 		$"Background/1".material.set("shader_parameter/speed", 0.0)
 		motion = false
+
+
+func player_draw_card(player: Types.PlayerActive, skip_weakness = false):
+	var hand = get_node("Player" + str(player + 1) + "/Hand")
+	
+	var card = Global.player_decks[player].pop_front()
+	
+	# Skip weaknesses on initial deal
+	if skip_weakness:
+		while card < 6:
+			Global.player_decks[player].append(card)
+			card = Global.player_decks[player].pop_front()
+	else:
+		if card < 6:
+			printerr("handle weakness")
+			#TODO: handle weakness
+	
+	var card_scene = CARD_SCENE.instantiate()
+	card_scene.setup(Types.CardType.Player, player, card, true)
+	card_scene.connect("play_card", player_play_card_check)
+	hand.add_child(card_scene)
+
+func player_play_card(id: int, link: Object) -> bool:
+	print("player_play_card")
+	# check resource cost
+	if Global.player_treasures[Global.active_player] < Data.player_cards[id].costs:
+		addlog("Cant afford to play this card")
+		return false
+	else:
+		# Remove costs
+		Global.player_treasures[Global.active_player] -= Data.player_cards[id].costs
+	
+	# Assets Cards
+	if Data.player_cards[id].type == Types.PlayerCardType.Asset:
+		# check if is asset and asset space is free -> remove old asset
+		if Global.played_assets[Global.active_player][Data.player_cards[id].location] > -1:
+			# Already equiped item
+			# Put on discard stack
+			var old_card_id = Global.played_assets[Global.active_player][Data.player_cards[id].location]
+			Global.discarded_cards[Global.active_player].append(old_card_id)
+			get_node("Player" + str(Global.active_player + 1) + "/Discard").setup(Types.CardType.Player, Global.active_player, old_card_id)
+		
+		# Add to played assets
+		Global.played_assets[Global.active_player][Data.player_cards[id].location] = id
+		# Display card
+		var card: Object = get_node("Player" + str(Global.active_player + 1) + "/Asset" + str(Data.player_cards[id].location))
+		card.setup(Types.CardType.Player, Global.active_player, id)
+		# Remove card from hand
+		link.queue_free()
+		return true
+
+	# Skill Cards
+	elif Data.player_cards[id].type == Types.PlayerCardType.Skill:
+		# Add to active skills
+		Global.played_skills_active.append(id)
+		# Add card to discard pile
+		get_node("Player" + str(Global.active_player + 1) + "/Discard").setup(Types.CardType.Player, Global.active_player, id)
+		# Remove card from hand
+		link.queue_free()
+		return true
+	
+	return false
+
+func update_discard_stack():
+	#TODO
+	pass
+
+func player_play_card_check(id: int, link: Object):
+	print("player_play_card_check")
+	if Global.active_player == link.card_owner:
+		print("is owner")
+		
+		# Handle play card in round
+		if Global.round_phase == Types.RoundPhaseDetail.FirstPlayerAction \
+			or Global.round_phase == Types.RoundPhaseDetail.SecondPlayerAction:
+			print("roundphase correct")
+			spend_action(Types.ActionType.PlayCard, {"id": id, "link": link})
+				
+			# checks
+			print(id)
+			print(link)
+	else:
+		addlog("This is not your card")
+
+func player_draw_card_checks(owner: Types.PlayerActive):
+	if Global.active_player == owner:
+		# TODO: check if player is allowed to draw
+		if Global.round_phase == Types.RoundPhaseDetail.ResupplyFirstPlayer \
+			or Global.round_phase == Types.RoundPhaseDetail.DiscardSecondPlayer:
+			player_draw_card(owner)
+		else:
+			addlog("You cannot draw a card now")
+	else:
+		addlog("This is not your deck")
+
+
+func _on_player_1_pile_draw_card():
+	player_draw_card_checks(Types.PlayerActive.Player1)
+
+
+func _on_player_2_pile_draw_card():
+	player_draw_card_checks(Types.PlayerActive.Player2)
+
+
+func _on_encounter_pile_draw_card():
+	pass # Replace with function body.

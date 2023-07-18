@@ -14,9 +14,9 @@ enum PlayerCardType {
 }
 
 enum AssetLocationType {
-  Head,
-  Hand,
-  Body
+  Head = 0,
+  Hand = 1,
+  Body = 2
 }
 
 enum EncounterCardType {

@@ -1,0 +1,47 @@
+[gd_scene load_steps=3 format=3 uid="uid://u73n3vmbmx7h"]
+
+[ext_resource type="Script" path="res://src/deck_builder.gd" id="1_wfg07"]
+[ext_resource type="PackedScene" uid="uid://cc28vpkglgaar" path="res://src/card.tscn" id="2_8bujo"]
+
+[node name="deck_builder" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wfg07")
+
+[node name="Card" parent="." instance=ExtResource("2_8bujo")]
+offset_left = 297.0
+offset_top = 142.0
+offset_right = 361.0
+offset_bottom = 238.0
+
+[node name="Minus" type="Button" parent="."]
+layout_mode = 0
+offset_left = 244.0
+offset_top = 173.0
+offset_right = 262.0
+offset_bottom = 204.0
+text = "<"
+
+[node name="Plus" type="Button" parent="."]
+layout_mode = 0
+offset_left = 384.0
+offset_top = 176.0
+offset_right = 402.0
+offset_bottom = 207.0
+text = ">"
+
+[node name="DebugFullscreen" type="Button" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 33.0
+offset_bottom = 47.0
+text = "F"
+
+[connection signal="button_up" from="Minus" to="." method="_on_minus_button_up"]
+[connection signal="button_up" from="Plus" to="." method="_on_plus_button_up"]
+[connection signal="button_up" from="DebugFullscreen" to="." method="_on_debug_fullscreen_button_up"]

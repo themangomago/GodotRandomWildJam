@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bcj4n2s85x420"
-path="res://.godot/imported/traindummy.png-b0ea24e02c39b43c41660a81ebc3cffa.ctex"
+uid="uid://6i6ymaocryev"
+path="res://.godot/imported/encounter_cards.png-a47d804c29f58d807055891ed6d249d1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/cards/traindummy.png"
-dest_files=["res://.godot/imported/traindummy.png-b0ea24e02c39b43c41660a81ebc3cffa.ctex"]
+source_file="res://assets/cards/encounter_cards.png"
+dest_files=["res://.godot/imported/encounter_cards.png-a47d804c29f58d807055891ed6d249d1.ctex"]
 
 [params]
 

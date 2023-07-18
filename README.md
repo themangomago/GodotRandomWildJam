@@ -9,10 +9,12 @@ TODOs:
 
 Thuesday:
 - [ ] Action: Play card mechanism
-- [ ] Action: Evade/Attack mechanism
-- [ ] Draw encounter mechanism
+
   
 Wednesday:
+- [ ] Action: Evade/Attack mechanism
+- [ ] Draw encounter mechanism
+Thursday:
 - [ ] Move enemy mechanism
 - [ ] Engage enemy mechanism
 - [ ] Resupply mechanism (draw/discard)

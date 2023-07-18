@@ -66,7 +66,7 @@ var encounter_cards = [
 	{"type": Types.EncounterCardType.Enemy, "name": "Guard Dog", "desc": "", "stats": [2, 1, 4], "damage": [1, 1]},
 ]
 
-var train_deck = [
+var train_cards = [
 	{
 		"type": Types.TrainCardType.Engine,
 		"name": "Engine",
