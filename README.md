@@ -8,18 +8,24 @@ TODOs:
 - [x] Add enemy/treachery cards
 
 Thuesday:
-- [ ] Action: Play card mechanism
+- [x] Action: Play card mechanism
 
   
 Wednesday:
-- [ ] Action: Evade/Attack mechanism
-- [ ] Draw encounter mechanism
-Thursday:
-- [ ] Move enemy mechanism
-- [ ] Engage enemy mechanism
-- [ ] Resupply mechanism (draw/discard)
+- [ ] Draw encounter mechanism (2h)
+- [ ] Engage enemy mechanism (1h)
+- [ ] Action: Evade/Attack mechanism (2h)
 
-- [ ] All hero decks
+Thursday:
+- [ ] Resupply mechanism (draw/discard) (1h)
+- [ ] All hero decks (1h)
+- [ ] Hero Art (2h)
+Friday:
+- [ ] Encounter Deck Art (4h)
+- [ ] Train Deck Art (4h)
+- [x] player deck art (2h)
+- [ ] Main menu (1h)
+- [ ] Itch.io page (1h)
 
 
 Round Phase Detail:
@@ -28,7 +34,7 @@ Round Phase Detail:
 1. Player Action Phase:
   1.1 Choose starting player
   1.2 Select up to 3 actions:
-    1.2.1 Move
+    1.2.1 Move (postponed)
     1.2.2 Attack
     1.2.3 Search
     1.2.4 Evade

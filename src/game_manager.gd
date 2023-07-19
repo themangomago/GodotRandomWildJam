@@ -42,12 +42,27 @@ func new_game():
 	Global.is_engine_found = false
 	train_init()
 	
+	
+	Global.encounter_deck = Data.encounter_deck.duplicate()
+	Global.encounter_deck.shuffle()
+	Global.encounter_deck.shuffle()
+	
 	# Copy modifier decks
 	Global.modifier_deck = [
 		Data.modifier_deck[Global.game_difficulty].duplicate(),
 		Data.modifier_deck[Global.game_difficulty].duplicate(),
 	]
-	
+
+	# Visual setup
+	$Player1/Asset0.empty()
+	$Player1/Asset1.empty()
+	$Player1/Asset2.empty()
+	$Player1/Discard.empty()
+	$Player2/Asset0.empty()
+	$Player2/Asset1.empty()
+	$Player2/Asset2.empty()
+	$Player2/Discard.empty()
+
 	hero_init()
 	
 	round_phase_next()
@@ -73,6 +88,7 @@ func hero_init():
 		Global.player_decks[i][1] = rand_2
 		
 		# Shuffle
+		Global.player_decks[i].shuffle()
 		Global.player_decks[i].shuffle()
 
 	for i in range(3):
@@ -135,31 +151,41 @@ func round_phase_next():
 		Types.RoundPhaseDetail.SecondPlayerAction:
 			$PhaseDisplay/Label.set_text("Player Action Phase: Player " + str(Global.active_player + 1))
 			addlog("Player" + str(Global.active_player) + "'s turn...")
-		Types.RoundPhaseDetail.EncounterMove:
-			$PhaseDisplay/Label.set_text("Enemy Action Phase")
-			addlog("Moving encounters")
-			pass
+
 		Types.RoundPhaseDetail.EncounterFirstPlayer:
+			next_player()
 			addlog("Encounter FirstPlayer")
-			pass
 		Types.RoundPhaseDetail.EncounterSecondPlayer:
+			next_player()
 			addlog("Encounter SecondPlayer")
-			pass
 		Types.RoundPhaseDetail.ResupplyFirstPlayer:
+			next_player()
 			$PhaseDisplay/Label.set_text("Resupply Phase")
-			$CharSheetP1.set_ap(3)
+			Global.action_points = 3
+			Global.player_treasures[0] += 1
+			$CharSheetP1.update()
 			addlog("Resupply FirstPlayer")
 			pass
 		Types.RoundPhaseDetail.ResupplySecondPlayer:
-			$CharSheetP2.set_ap(3)
+			next_player()
+			Global.player_treasures[1] += 1
+			$CharSheetP2.update()
 			addlog("Resupply SecondPlayer")
 			pass
 		Types.RoundPhaseDetail.DiscardFirstPlayer:
-			addlog("Discard  FirstPlayer")
+			next_player()
+			addlog("Discard FirstPlayer")
 			pass
 		Types.RoundPhaseDetail.DiscardSecondPlayer:
+			next_player()
 			addlog("Discard SecondPlayer")
 			pass
+		Types.RoundPhaseDetail.DrawEnemyCardFirstPlayer:
+			next_player()
+			addlog("Player" + str(Global.active_player) + ": Draw encounter card")
+		Types.RoundPhaseDetail.DrawEnemyCardSecondPlayer:
+			next_player()
+			addlog("Player" + str(Global.active_player) + ": Draw encounter card")
 		Types.RoundPhaseDetail.CheckEndGame:
 			addlog("Check end game condition")
 			pass
@@ -354,12 +380,16 @@ func _on_move_left_button_up():
 func _on_move_right_button_up():
 	spend_action(Types.ActionType.Move, "right")
 
+func next_player():
+	if Global.active_player == Global.first_player:
+		Global.active_player = Global.second_player
+	else:
+		Global.active_player = Global.first_player
 
 func _on_end_turn_button_up():
 	addlog("Round end for Player" + str(Global.active_player))
 	
-	if Global.active_player == Global.first_player:
-		Global.active_player = Global.second_player
+	next_player()
 	Global.action_points = 3
 	Global.played_skills_active = []
 	
@@ -547,7 +577,7 @@ func player_draw_card_checks(owner: Types.PlayerActive):
 	if Global.active_player == owner:
 		# TODO: check if player is allowed to draw
 		if Global.round_phase == Types.RoundPhaseDetail.ResupplyFirstPlayer \
-			or Global.round_phase == Types.RoundPhaseDetail.DiscardSecondPlayer:
+			or Global.round_phase == Types.RoundPhaseDetail.ResupplySecondPlayer:
 			player_draw_card(owner)
 		else:
 			addlog("You cannot draw a card now")
@@ -564,4 +594,9 @@ func _on_player_2_pile_draw_card():
 
 
 func _on_encounter_pile_draw_card():
-	pass # Replace with function body.
+	if Global.round_phase == Types.RoundPhaseDetail.DrawEnemyCardFirstPlayer \
+		or Global.round_phase == Types.RoundPhaseDetail.DrawEnemyCardSecondPlayer:
+			pass
+	else:
+		addlog("You cannot draw a card now")
+

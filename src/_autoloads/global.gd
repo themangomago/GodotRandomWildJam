@@ -21,7 +21,7 @@ var player_decks = [
 	[],
 	[]
 ]
-
+var encounter_deck = []
 
 # Played area
 var played_train = []

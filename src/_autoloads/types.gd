@@ -55,15 +55,16 @@ enum RoundPhaseDetail {
   PlayerSelect = 0,
   FirstPlayerAction = 1,
   SecondPlayerAction = 2,
-  EncounterMove = 3,
+  #EncounterMove = 3, # No time, no need. Postponed
   EncounterFirstPlayer = 4,
   EncounterSecondPlayer = 5,
   ResupplyFirstPlayer = 6,
   ResupplySecondPlayer = 7,
   DiscardFirstPlayer = 8,
   DiscardSecondPlayer = 9,
-  DrawEnemyCard = 10,
-  CheckEndGame = 11,
+  DrawEnemyCardFirstPlayer = 10,
+  DrawEnemyCardSecondPlayer = 11,
+  CheckEndGame = 12,
 }
 
 enum CardOwner {
@@ -90,3 +91,4 @@ enum SkillType {
   Intelligence
 }
 
+ 

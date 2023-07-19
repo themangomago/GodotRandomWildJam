@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://dqcwmuvs02sdx"]
+[gd_scene load_steps=30 format=3 uid="uid://dqcwmuvs02sdx"]
 
 [ext_resource type="Script" path="res://src/game_manager.gd" id="1_ntnnl"]
 [ext_resource type="Texture2D" uid="uid://cvddx1rtog8uu" path="res://assets/background/background6.png" id="3_2p320"]
@@ -14,6 +14,7 @@
 [ext_resource type="Texture2D" uid="uid://cs7oipvtyeubp" path="res://assets/dummy.png" id="9_4fj3o"]
 [ext_resource type="PackedScene" uid="uid://cc28vpkglgaar" path="res://src/card.tscn" id="11_x01wh"]
 [ext_resource type="FontFile" uid="uid://cubxkx25d5we" path="res://assets/fonts/TinyUnicode.ttf" id="13_xw0jc"]
+[ext_resource type="Texture2D" uid="uid://6i6ymaocryev" path="res://assets/cards/encounter_cards.png" id="14_7rpuu"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iuwb3"]
 shader = ExtResource("7_pbrlv")
@@ -52,42 +53,6 @@ shader_parameter/speed = 0.14
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mrxlh"]
 shader = ExtResource("7_pbrlv")
 shader_parameter/speed = 1.0
-
-[sub_resource type="Animation" id="Animation_vpi8k"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_bq6is"]
-resource_name = "popup"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath(".:visible")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 1,
-"values": [true, false]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_uy46r"]
-_data = {
-"RESET": SubResource("Animation_vpi8k"),
-"popup": SubResource("Animation_bq6is")
-}
 
 [sub_resource type="Animation" id="Animation_mc7u5"]
 length = 0.001
@@ -147,6 +112,42 @@ tracks/1/keys = {
 _data = {
 "RESET": SubResource("Animation_mc7u5"),
 "popup": SubResource("Animation_j71rj")
+}
+
+[sub_resource type="Animation" id="Animation_vpi8k"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_bq6is"]
+resource_name = "popup"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:visible")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_uy46r"]
+_data = {
+"RESET": SubResource("Animation_vpi8k"),
+"popup": SubResource("Animation_bq6is")
 }
 
 [node name="GameManager" type="Control"]
@@ -402,13 +403,120 @@ text = "Phase"
 horizontal_alignment = 1
 vertical_alignment = 1
 
+[node name="ModifierDraw" type="Sprite2D" parent="."]
+position = Vector2(480, 600)
+texture = ExtResource("4_sl0oa")
+hframes = 10
+frame = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="ModifierDraw"]
+libraries = {
+"": SubResource("AnimationLibrary_4gsdv")
+}
+
+[node name="Windows" type="ColorRect" parent="."]
+z_index = 102
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.505882)
+
+[node name="PlayerSelect" type="Panel" parent="Windows"]
+visible = false
+layout_mode = 0
+offset_left = 376.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 296.0
+
+[node name="Label" type="Label" parent="Windows/PlayerSelect"]
+layout_mode = 0
+offset_right = 224.0
+offset_bottom = 40.0
+text = "Select Starting Player"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="P1" type="Button" parent="Windows/PlayerSelect"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 48.0
+offset_right = 78.0
+offset_bottom = 79.0
+text = "Player 1"
+
+[node name="P2" type="Button" parent="Windows/PlayerSelect"]
+layout_mode = 0
+offset_left = 144.0
+offset_top = 48.0
+offset_right = 214.0
+offset_bottom = 79.0
+text = "Player 2"
+
+[node name="NoActions" type="Panel" parent="Windows"]
+visible = false
+layout_mode = 0
+offset_left = 376.0
+offset_top = 200.0
+offset_right = 600.0
+offset_bottom = 296.0
+
+[node name="Label" type="Label" parent="Windows/NoActions"]
+layout_mode = 0
+offset_top = 8.0
+offset_right = 224.0
+offset_bottom = 60.0
+text = "No more action points!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="NoActionsEndTurn" type="Button" parent="Windows/NoActions"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 56.0
+offset_right = 142.0
+offset_bottom = 87.0
+text = "EndTurn"
+
+[node name="Encounter" type="Panel" parent="Windows"]
+layout_mode = 0
+offset_left = 376.0
+offset_top = 128.0
+offset_right = 600.0
+offset_bottom = 400.0
+
+[node name="Label" type="Label" parent="Windows/Encounter"]
+layout_mode = 0
+offset_right = 216.0
+offset_bottom = 32.0
+text = "Player 1:"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="Windows/Encounter"]
+position = Vector2(104, 128)
+scale = Vector2(2, 2)
+texture = ExtResource("14_7rpuu")
+hframes = 19
+
+[node name="EncounterButton" type="Button" parent="Windows/Encounter"]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 232.0
+offset_right = 136.0
+offset_bottom = 263.0
+text = "Shit!"
+
 [node name="SkillCheck" type="Panel" parent="."]
 visible = false
 layout_mode = 0
-offset_left = 368.0
-offset_top = 40.0
-offset_right = 592.0
-offset_bottom = 168.0
+offset_left = 8.0
+offset_top = 112.0
+offset_right = 232.0
+offset_bottom = 240.0
 
 [node name="Title" type="Label" parent="SkillCheck"]
 layout_mode = 1
@@ -461,9 +569,9 @@ metadata/_edit_lock_ = true
 visible = false
 layout_mode = 0
 offset_left = 368.0
-offset_top = 176.0
+offset_top = 32.0
 offset_right = 592.0
-offset_bottom = 208.0
+offset_bottom = 64.0
 
 [node name="Title" type="Label" parent="Notification"]
 layout_mode = 1
@@ -482,83 +590,6 @@ metadata/_edit_lock_ = true
 libraries = {
 "": SubResource("AnimationLibrary_uy46r")
 }
-
-[node name="ModifierDraw" type="Sprite2D" parent="."]
-position = Vector2(480, 600)
-texture = ExtResource("4_sl0oa")
-hframes = 10
-frame = 2
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="ModifierDraw"]
-libraries = {
-"": SubResource("AnimationLibrary_4gsdv")
-}
-
-[node name="Windows" type="ColorRect" parent="."]
-visible = false
-z_index = 102
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-color = Color(0, 0, 0, 0.505882)
-
-[node name="PlayerSelect" type="Panel" parent="Windows"]
-layout_mode = 0
-offset_left = 376.0
-offset_top = 200.0
-offset_right = 600.0
-offset_bottom = 296.0
-
-[node name="Label" type="Label" parent="Windows/PlayerSelect"]
-layout_mode = 0
-offset_right = 224.0
-offset_bottom = 40.0
-text = "Select Starting Player"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="P1" type="Button" parent="Windows/PlayerSelect"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 48.0
-offset_right = 78.0
-offset_bottom = 79.0
-text = "Player 1"
-
-[node name="P2" type="Button" parent="Windows/PlayerSelect"]
-layout_mode = 0
-offset_left = 144.0
-offset_top = 48.0
-offset_right = 214.0
-offset_bottom = 79.0
-text = "Player 2"
-
-[node name="NoActions" type="Panel" parent="Windows"]
-layout_mode = 0
-offset_left = 376.0
-offset_top = 200.0
-offset_right = 600.0
-offset_bottom = 296.0
-
-[node name="Label" type="Label" parent="Windows/NoActions"]
-layout_mode = 0
-offset_top = 8.0
-offset_right = 224.0
-offset_bottom = 60.0
-text = "No more action points!"
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="NoActionsEndTurn" type="Button" parent="Windows/NoActions"]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 56.0
-offset_right = 142.0
-offset_bottom = 87.0
-text = "EndTurn"
 
 [node name="DebugNext" type="Button" parent="."]
 layout_mode = 0
@@ -623,6 +654,7 @@ text = "test"
 [connection signal="button_up" from="Windows/PlayerSelect/P1" to="." method="_on_p_1_button_up"]
 [connection signal="button_up" from="Windows/PlayerSelect/P2" to="." method="_on_p_2_button_up"]
 [connection signal="button_up" from="Windows/NoActions/NoActionsEndTurn" to="." method="_on_no_actions_end_turn_button_up"]
+[connection signal="button_up" from="Windows/Encounter/EncounterButton" to="." method="_on_no_actions_end_turn_button_up"]
 [connection signal="button_up" from="DebugNext" to="." method="_on_debug_next_button_up"]
 [connection signal="button_up" from="DebugFS" to="." method="_on_debug_fs_button_up"]
 [connection signal="button_up" from="DebugM" to="." method="_on_debug_m_button_up"]

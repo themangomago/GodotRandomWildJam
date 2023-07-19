@@ -11,8 +11,13 @@ var ENCOUNTER_CARDS = preload("res://assets/cards/encounter_cards.png")
 
 signal play_card(id, linked)
 
+func empty():
+	$Card.hide()
+	$CardZoom.hide()
+
 # Called when the node enters the scene tree for the first time.
 func setup(_card_type: Types.CardType, _card_owner: Types.CardOwner, _id: int, alternative_popup: bool = false):
+	$Card.show()
 	$CardZoom.hide()
 	card_type = _card_type
 	card_owner = _card_owner

@@ -31,7 +31,7 @@ var player_cards = [
 	{"type": Types.PlayerCardType.Asset, "name": "Knife", "desc": "", "effects": [{"e": "attack", "a": 1}], "location": Types.AssetLocationType.Hand, "costs": 1},
 	{"type": Types.PlayerCardType.Asset, "name": "Steton Hat", "desc": "", "effects": [{"e": "intelligence", "a": 1}], "location": Types.AssetLocationType.Head, "costs": 1},
 	{"type": Types.PlayerCardType.Asset, "name": "Bandana", "desc": "", "effects": [{"e": "dodge", "a": 1}], "location": Types.AssetLocationType.Head, "costs": 1},
-	{"type": Types.PlayerCardType.Asset, "name": "Neckerchief", "desc": "", "effects": [{"e": "willpower", "a": 1}], "location": Types.AssetLocationType.Head, "costs": 1},
+	{"type": Types.PlayerCardType.Asset, "name": "Derby Hat", "desc": "", "effects": [{"e": "willpower", "a": 1}], "location": Types.AssetLocationType.Head, "costs": 1},
 	{"type": Types.PlayerCardType.Asset, "name": "Buckskin Jacket", "desc": "", "effects": [{"e": "heal", "a": 2}], "location": Types.AssetLocationType.Head, "costs": 1},
 	{"type": Types.PlayerCardType.Asset, "name": "Bullet Proof Vest", "desc": "", "effects": [{"e": "heal", "a": 2}, {"e": "resilience", "a": -1}], "location": Types.AssetLocationType.Head, "costs": 2},
 	{"type": Types.PlayerCardType.Asset, "name": "Spurs", "desc": "", "effects": [{"e": "dodge", "a": 1}], "location": Types.AssetLocationType.Head, "costs": 1},
@@ -65,6 +65,8 @@ var encounter_cards = [
 	{"type": Types.EncounterCardType.Enemy, "name": "Train Conductor", "desc": "", "stats": [2, 2, 2], "damage": [1, 0]},
 	{"type": Types.EncounterCardType.Enemy, "name": "Guard Dog", "desc": "", "stats": [2, 1, 4], "damage": [1, 1]},
 ]
+
+var encounter_deck = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,10, 11, 12,12, 13, 14, 15, 16, 17]
 
 var train_cards = [
 	{
